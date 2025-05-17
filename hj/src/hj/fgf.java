@@ -5,56 +5,51 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class fgf extends JFrame {
-    private JTextField txtChieuDai, txtChieuRong, txtDienTich;
-    private JButton btnTinh, btnThoat;
+    private JTextField txtSo1, txtSo2;
+    private JButton btnChia;
+    private JLabel lblKetQua;
 
     public fgf() {
-        setTitle("Tính diện tích hình chữ nhật");
-        setSize(400, 250);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("Phép chia hai số");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(5, 2, 10, 10));
+        setLayout(new GridLayout(4, 2, 5, 5));
 
-        // Tạo các thành phần
-        JLabel lblChieuDai = new JLabel("Chiều dài:");
-        JLabel lblChieuRong = new JLabel("Chiều rộng:");
-        JLabel lblDienTich = new JLabel("Diện tích:");
+        txtSo1 = new JTextField();
+        txtSo2 = new JTextField();
+        btnChia = new JButton("Chia");
+        lblKetQua = new JLabel("Kết quả: ");
 
-        txtChieuDai = new JTextField();
-        txtChieuRong = new JTextField();
-        txtDienTich = new JTextField();
-        txtDienTich.setEditable(false);
+        add(new JLabel("Số thứ nhất:"));
+        add(txtSo1);
+        add(new JLabel("Số thứ hai:"));
+        add(txtSo2);
+        add(btnChia);
+        add(lblKetQua);
 
-        btnTinh = new JButton("Tính");
-        btnThoat = new JButton("Thoát");
-
-        // Thêm sự kiện cho nút "Tính"
-        btnTinh.addActionListener(new ActionListener() {
+        btnChia.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    double dai = Double.parseDouble(txtChieuDai.getText());
-                    double rong = Double.parseDouble(txtChieuRong.getText());
-                    double dientich = dai * rong;
-                    txtDienTich.setText(String.valueOf(dientich));
+                    double so1 = Double.parseDouble(txtSo1.getText());
+                    double so2 = Double.parseDouble(txtSo2.getText());
+
+                    if (so2 == 0) {
+                        lblKetQua.setText("Không thể chia cho 0");
+                    } else {
+                        double ketQua = so1 / so2;
+                        lblKetQua.setText("Kết quả: " + ketQua);
+                    }
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(fgf.this, "Vui lòng nhập số hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    lblKetQua.setText("Vui lòng nhập số hợp lệ");
                 }
             }
         });
-
-        // Thêm sự kiện cho nút "Thoát"
-        btnThoat.addActionListener(e -> System.exit(0));
-
-        // Thêm thành phần vào JFrame
-        add(lblChieuDai); add(txtChieuDai);
-        add(lblChieuRong); add(txtChieuRong);
-        add(lblDienTich); add(txtDienTich);
-        add(btnTinh); add(btnThoat);
-
-        setVisible(true);
     }
 
     public static void main(String[] args) {
-        new fgf();
+        SwingUtilities.invokeLater(() -> {
+            new fgf().setVisible(true);
+        });
     }
 }
